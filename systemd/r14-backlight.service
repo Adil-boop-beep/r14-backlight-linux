@@ -1,0 +1,25 @@
+[Unit]
+Description=Machcreator Genesis R14: keyboard backlight always on (EC idle counter reset)
+ConditionPathExists=/sys/kernel/debug
+After=sysinit.target
+
+[Service]
+Type=simple
+# Разрешаем запись в EC только через ec_sys (debugfs, доступен только root)
+ExecStartPre=-/usr/bin/modprobe -r ec_sys
+ExecStartPre=/usr/bin/modprobe ec_sys write_support=1
+ExecStart=/usr/local/lib/r14-backlight/r14-backlightd.py
+# При остановке возвращаем ec_sys в режим только чтения
+ExecStopPost=-/usr/bin/modprobe -r ec_sys
+ExecStopPost=-/usr/bin/modprobe ec_sys
+Restart=on-failure
+RestartSec=5
+# Environment=R14_RESET_AT=0x50
+# Environment=R14_POLL=1.0
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+NoNewPrivileges=yes
+
+[Install]
+WantedBy=multi-user.target

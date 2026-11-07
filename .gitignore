@@ -1,0 +1,15 @@
+# Research data: ACPI table dumps and EC logs (machine-specific, not published)
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Editors / temp files
+*~
+*.swp
+*.swo
+*.tmp
+*.bak
+.#*
+.DS_Store
