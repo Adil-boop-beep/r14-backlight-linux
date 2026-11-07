@@ -8,8 +8,9 @@ Out of the box, the embedded controller (EC) turns the backlight off after 15 se
 and it only comes back on a key press. There is no vendor software and no BIOS option for this.
 This project is a small systemd service that keeps the backlight lit at whatever level you pick with **Fn+F1**.
 
-> **Status:** experimental. A single test write to the EC worked as expected.
-> The service still needs more real-world testing, especially after suspend/resume.
+> **Status:** works on the author's laptop. Tested for about 40 minutes of normal use, including
+> turning the backlight off and on with Fn+F1 and one suspend/resume cycle (the service kept running,
+> no restarts, no EC errors). Still experimental: only one machine has been tested.
 
 ## How it works
 
@@ -84,8 +85,10 @@ sudo bash uninstall.sh
 
 ## Not tested yet
 
-- Behaviour after suspend/resume. If the backlight is off after waking up, a key press should bring it back.
+- Whether the backlight comes back on by itself after resume if it was on before suspend
+  (in the test it was off before suspend). If it is off after waking up, a key press or Fn+F1 brings it back.
 - Whether writing `0` brings back a backlight that has already timed out (`0x37 = 0x96`) without a key press.
+- Long-term use (days) and other BIOS versions.
 
 ## Project layout
 
